@@ -1,4 +1,5 @@
 name: CI Pipeline
+
 on:
   push:
     branches: [ main, dev ]
@@ -10,19 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repo
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: 🐍 Set Up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Install Linting Tools
-        run: pip install flake8 markdownlint-cli
+      - name: 📦 Install Python Linter (flake8)
+        run: pip install flake8
 
-      - name: Lint Python Code
+      - name: 🧪 Lint Python Code
         run: flake8 src/
 
-      - name: Lint Markdown Docs
+      - name: 🛠️ Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 📦 Install Markdown Linter (markdownlint-cli)
+        run: npm install -g markdownlint-cli
+
+      - name: 🧹 Lint Markdown Docs
         run: markdownlint docs/
